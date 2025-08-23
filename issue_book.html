@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Issue a Book</h2>
+  {% if books %}
+  <form method="POST" action="{{ url_for('issue_book') }}">
+    <div class="mb-3">
+      <label for="book" class="form-label">Select Book:</label>
+      <select id="book" name="book_id" class="form-select" required>
+        <option value="" disabled selected>Select a book</option>
+        {% for book in books %}
+          <option value="{{ book.id }}">{{ book.title }} by {{ book.author }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="student" class="form-label">Student Name:</label>
+      <input type="text" id="student" name="student" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="due" class="form-label">Due Date:</label>
+      <input type="date" id="due" name="due_date" class="form-control" required>
+      <small class="form-text text-muted">Select a due date for returning the book.</small>
+    </div>
+    <button type="submit" class="btn btn-primary">Issue Book</button>
+  </form>
+  {% else %}
+    <p class="text-warning">No books available to issue. Please add books first.</p>
+  {% endif %}
+</div>
+{% endblock %}

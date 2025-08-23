@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Return a Book</h2>
+  {% if issued_books %}
+  <form method="POST" action="{{ url_for('return_book') }}">
+    <div class="mb-3">
+      <label for="record" class="form-label">Select Issued Book:</label>
+      <select id="record" name="record_id" class="form-select" required>
+        <option value="" disabled selected>Select a book to return</option>
+        {% for rec in issued_books %}
+          <option value="{{ rec.book_id }}">
+            {{ rec.title }} (issued to {{ rec.student }}, due {{ rec.due_date }})
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Return Book</button>
+  </form>
+  {% else %}
+    <p class="text-warning">No books are currently issued out.</p>
+  {% endif %}
+</div>
+{% endblock %}

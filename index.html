@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h1>Dashboard</h1>
+  <!-- ✅ Flash message display block -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+  <p>Welcome to the Library Book Management System!</p>
+  
+  <h3>Available Books ({{ books|length }})</h3>
+  {% if books %}
+    <ul class="list-group mb-3">
+      {% for book in books %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ book.title }} by {{ book.author }}
+        <small class="text-muted">Added on {{ book.date_added }}</small>
+        <!-- Remove button -->
+        <form method="POST" action="{{ url_for('remove_book', book_id=book.id) }}">
+          <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No books in the library catalog yet.</p>
+  {% endif %}
+  
+  <a href="{{ url_for('add_book') }}" class="btn btn-success">Add a New Book</a>
+  <a href="{{ url_for('issue_book') }}" class="btn btn-primary">Issue a Book</a>
+  <a href="{{ url_for('return_book') }}" class="btn btn-info">Return a Book</a>
+</div>
+{% endblock %}
