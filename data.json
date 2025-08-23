@@ -1,0 +1,12 @@
+{
+    "books": [
+        {
+            "id": 7,
+            "title": "atomic habit",
+            "author": "james clear",
+            "date_added": "2025-08-23"
+        }
+    ],
+    "issued_books": [],
+    "next_book_id": 8
+}
